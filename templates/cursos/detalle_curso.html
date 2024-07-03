@@ -14,7 +14,7 @@
 
         {% if user.rol == 'normal' and curso.estado %}
             {% if user in curso.inscritos.all %}
-                <p class="mt-3 text-success">Ya estás inscrito een este curso.</p>
+                <p class="mt-3 text-success">Ya estás inscrito en este curso.</p>
             {% else %}
                 <a href="{% url 'inscribir_curso' curso.pk %}" class="btn btn-primary mt-3">Inscribirse</a>
             {% endif %}

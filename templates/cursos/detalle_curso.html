@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ curso.nombre }}{% endblock %}
+{% block contenido %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">{{ curso.nombre }}</h2>
+        <p class="card-text">{{ curso.descripcion }}</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Fecha Inicio:</strong>{{ curso.fecha_inicio }}</li>
+            <li class="list-group-item"><strong>Fecha Fin:</strong>{{ curso.fecha_fin }}</li>
+            <li class="list-group-item"><strong>Cupos:</strong>{{ curso.cupos }}</li>
+            <li class="list-group-item"><strong>Estado:</strong>{% if curso.estado %}Activo{% else %}Inactivo{% endif %}</li>
+        </ul>
+
+        {% if user.rol == 'normal' and curso.estado %}
+            {% if user in curso.inscritos.all %}
+                <p class="mt-3 text-success">Ya estás inscrito een este curso.</p>
+            {% else %}
+                <a href="{% url 'inscribir_curso' curso.pk %}" class="btn btn-primary mt-3">Inscribirse</a>
+            {% endif %}
+        {% endif %}
+
+        {% if user.rol == 'admin' %}
+            <h3 class="mt-4>">Listado de usuarios inscritos en el curso</h3>
+            <table class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in curso.inscritos.all %}
+                        <tr>
+                            <td>{{ usuario.first_name }}</td>
+                            <td>{{ usuario.last_name }}</td>
+                            <td>{{ usuario.email }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3"> No hay usuarios registrados en este curso.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block titulo %}{% if form.instance.pk %}Editar Curso{% eslse %}Crear Curso{% endif %}{% endblock %}
+{% block titulo %}{% if form.instance.pk %}Editar Curso{% else %}Crear Curso{% endif %}{% endblock %}
 {% block contenido %}
 <div class="card">
     <div class="card-body">
-        <h2 class="card-title">{% if form.instance.pk %}Editar Curso{% eslse %}Crear Curso{% endif %}</h2>
+        <h2 class="card-title">{% if form.instance.pk %}Editar Curso{% else %}Crear Curso{% endif %}</h2>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
